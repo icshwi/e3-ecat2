@@ -1,8 +1,6 @@
+.DEFAULT_GOAL := help
 
 .PHONY: help default install uninstall build rebuild clean conf
-
-default: help
-
 
 # # help is defined in 
 # # https://gist.github.com/rcmachado/af3db315e31383502660
@@ -21,6 +19,10 @@ help:
 	}                                               \
 	{ helpMsg = $$0 }'                              \
 	$(MAKEFILE_LIST) | column -ts:	
+
+
+default: help
+
 
 
 
@@ -86,6 +88,6 @@ install_links: $(INSTALLED_EPICS_BASE_ARCHS)
 
 $(INSTALLED_EPICS_BASE_ARCHS):
 	$(SUDO) mkdir -p $(E3_SITELIBS_PATH)/$@
-	$(SUDO) ln -sf $(E3_MODULES_INSTALL_LOCATION)/lib/$@/$(E3_MODULES_LIBNAME) $(E3_SITELIBS_PATH)/$@/$(E3_MODULE_NAME).lib.$(E3_MODULE_VERSION)
+	$(SUDO) ln -sf $(E3_MODULES_INSTALL_LOCATION)/lib/$@/$(E3_MODULES_LIBNAME) $(E3_SITELIBS_PATH)/$@/$(E3_MODULES_LIBLINKNAME)
 
 
