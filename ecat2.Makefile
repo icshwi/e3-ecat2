@@ -27,7 +27,7 @@
 
 #where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-include $(REQUIRE_TOOLS)/driver.makefile
+include $(E3_REQUIRE_TOOLS)/driver.makefile
 
 
 USR_CPPFLAGS += -I/opt/etherlab/include
@@ -65,3 +65,7 @@ SORUCES += ectools.c
 #    - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
 # - have your system administrator add LIBDIR to `/etc/ld.so.conf'
 
+
+# db rule is the default in RULES_E3, so add the empty one
+
+db:
