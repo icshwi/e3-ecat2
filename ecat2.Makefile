@@ -17,13 +17,14 @@
 # 
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Tuesday, February 20 15:29:03 CET 2018
-# version : 0.0.1
+# Date    : Thursday, February 22 15:50:39 CET 2018
+# version : 0.0.2
 #
 where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 
+EXCLUDE_ARCHS += linux-ppc64e6500 
 
 USR_CPPFLAGS += -I/opt/etherlab/include
 USR_CFLAGS   += -I/opt/etherlab/include
