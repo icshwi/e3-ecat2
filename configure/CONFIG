@@ -5,11 +5,11 @@ EPICS_MODULE_NAME:=ecat2
 # *) master branch 
 #    export EPICS_MODULE_TAG:=master
 # *) individual hash 
-export EPICS_MODULE_TAG:=tags/v2.1.3-ess
+export EPICS_MODULE_TAG:=tags/v3.0.1
 export EPICS_MODULE_SRC_PATH:=ecat2-ess
 export ESS_MODULE_MAKEFILE:=$(EPICS_MODULE_NAME).Makefile
 export PROJECT:=$(EPICS_MODULE_NAME)
-export LIBVERSION:=2.1.3
+export LIBVERSION:=3.0.1
 export E3_ENV_PATH:=e3-env
 export E3_ENV_NAME:=e3-env
 #export E3_ENV_NAME:=E3_ENV_CONF

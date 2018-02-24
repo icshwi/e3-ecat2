@@ -30,6 +30,9 @@
 include $(REQUIRE_TOOLS)/driver.makefile
 
 
+EXCLUDE_ARCHS += linux-ppc64e6500 
+
+
 USR_CPPFLAGS += -I/opt/etherlab/include
 USR_CFLAGS   += -I/opt/etherlab/include
 
@@ -41,15 +44,25 @@ USR_LDFLAGS += -Wl,-rpath=/opt/etherlab/lib
 
 
 
-DBDS += drvethercat.dbd
+ECAT2=ecat2App
+ECAT2SRC:=$(ECAT2)/src
+ECAT2DB:=$(ECAT2)/Db
 
-SORUCES += devethercat.c
-SORUCES += drvethercat.c
-SORUCES += eccfg.c
-SORUCES += ecengine.c
-SORUCES += ecnode.c
-SORUCES += ectimer.c
-SORUCES += ectools.c
+
+USR_INCLUDES += -I$(where_am_I)$(ECAT2SRC)
+
+
+
+SOURCES += $(ECAT2SRC)/devethercat.c
+SOURCES += $(ECAT2SRC)/drvethercat.c
+SOURCES += $(ECAT2SRC)/eccfg.c
+SOURCES += $(ECAT2SRC)/ecengine.c
+SOURCES += $(ECAT2SRC)/ecnode.c
+SOURCES += $(ECAT2SRC)/ectimer.c
+SOURCES += $(ECAT2SRC)/ectools.c
+
+
+DBDS    += $(ECAT2SRC)/drvethercat.dbd
 
 # ibraries have been installed in:
 #    /opt/etherlab/lib
@@ -64,4 +77,41 @@ SORUCES += ectools.c
 #      during linking
 #    - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
 # - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+
+TEMPLATES += $(wildcard $(ECAT2DB)/*.db)
+TEMPLATES += $(wildcard $(ECAT2DB)/*.template)
+
+
+EPICS_BASE_HOST_BIN = $(EPICS_BASE)/bin/$(EPICS_HOST_ARCH)
+MSI =  $(EPICS_BASE_HOST_BIN)/msi
+
+
+USR_DBFLAGS += -I . -I ..
+USR_DBFLAGS += -I$(EPICS_BASE)/db
+USR_DBFLAGS += -I$(ECAT2DB)
+
+SUBS = $(wildcard $(ECAT2DB)/*.substitutions)
+TEMS = $(wildcard $(ECAT2DB)/*.template)
+
+
+db: $(SUBS) $(TEMS)
+
+$(SUBS):
+	@printf "Inflating database ... %44s >>> %40s \n" "$@" "$(basename $(@)).db"
+	@rm -f  $(basename $(@)).db.d  $(basename $(@)).db
+	@$(MSI) -D $(USR_DBFLAGS) -o $(basename $(@)).db -S $@  > $(basename $(@)).db.d
+	@$(MSI)    $(USR_DBFLAGS) -o $(basename $(@)).db -S $@
+
+$(TEMS):
+	@printf "Inflating database ... %44s >>> %40s \n" "$@" "$(basename $(@)).db"
+	@rm -f  $(basename $(@)).db.d  $(basename $(@)).db
+	@$(MSI) -D $(USR_DBFLAGS) -o $(basename $(@)).db $@  > $(basename $(@)).db.d
+	@$(MSI)    $(USR_DBFLAGS) -o $(basename $(@)).db $@
+
+
+
+
+.PHONY: db $(SUBS) $(TEMS)
+
 

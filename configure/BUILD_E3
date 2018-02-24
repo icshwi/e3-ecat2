@@ -35,7 +35,7 @@ help:
 default: help
 
 
-install: uninstall
+install: uninstall db
 	$(QUIET) sudo -E bash -c 'make $(M_OPTIONS) install'
 
 ## Uninstall $(PROJECT) Module in order not to use it
@@ -114,4 +114,8 @@ env:
 conf:
 	$(QUIET) install -m 644 $(TOP)/$(ESS_MODULE_MAKEFILE)  $(EPICS_MODULE_SRC_PATH)/
 
+
+db: conf
+	$(QUIET) $(shell source ../e3-env/setE3Env.bash)
+	$(QUIET) make $(M_OPTIONS) db
 
