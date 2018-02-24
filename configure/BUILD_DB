@@ -2,7 +2,7 @@
 ## This RULE should be used in case of inflating DB files
 ## 
 
-#.PHONY: db
+.PHONY: db
 
 ### We have to think how to find $(EPICS_BASE) and
 ### $(EPICS_HOST_ARCH) during driver.makefile
@@ -18,6 +18,5 @@
 ### 5) make install 
 ###   ..... 
 
-#db: conf
-#	$(QUIET) make $(M_OPTIONS) db
-
+db: conf
+	$(QUIET) bash -c "set -a && source ../e3-env/setE3Env.bash && set +a && make $(M_OPTIONS) db"

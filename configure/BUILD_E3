@@ -115,7 +115,4 @@ conf:
 	$(QUIET) install -m 644 $(TOP)/$(ESS_MODULE_MAKEFILE)  $(EPICS_MODULE_SRC_PATH)/
 
 
-db: conf
-	$(QUIET) $(shell source ../e3-env/setE3Env.bash)
-	$(QUIET) make $(M_OPTIONS) db
 
